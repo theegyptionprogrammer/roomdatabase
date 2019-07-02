@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">room practice</string>
+    <string name="insertbutton">insert</string>
+    <string name="updatebutton">update</string>
+    <string name="searchbutton">search</string>
+    <string name="deletebutton">clear all</string>
+    <string name="savebutton">save</string>
+    <string name="studentname">student name</string>
+    <string name="studentaddress">student address</string>
+    <string name="studentcourse">student course</string>
+    <string name="studentid">student id</string>
+    <string name="studentscounts">students count</string>
+</resources>

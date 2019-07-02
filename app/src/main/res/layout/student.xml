@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout android:layout_height="150dp"
+                android:layout_width="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView android:layout_width="250dp"
+              android:id="@+id/idTV"
+              android:hint="@string/studentid"
+              android:layout_height="30dp"/>
+
+    <TextView android:layout_width="250dp"
+              android:id="@+id/nameTV"
+              android:hint="@string/studentname"
+              android:layout_below="@+id/idTV"
+              android:layout_height="30dp"/>
+
+    <TextView android:layout_width="250dp"
+              android:id="@+id/courseTV"
+              android:hint="@string/studentcourse"
+              android:layout_below="@+id/nameTV"
+              android:layout_height="30dp"/>
+
+    <TextView android:layout_width="250dp"
+              android:id="@+id/addressTV"
+              android:hint="@string/studentaddress"
+              android:layout_below="@+id/courseTV"
+              android:layout_height="30dp"/>
+
+    <ImageView android:layout_width="150dp"
+               android:id="@+id/profilephoto"
+               android:layout_alignParentRight="true"
+               android:layout_height="200dp"
+               android:layout_alignParentEnd="true"/>
+
+
+
+</RelativeLayout>
