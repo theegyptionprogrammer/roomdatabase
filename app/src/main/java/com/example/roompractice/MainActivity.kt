@@ -45,11 +45,6 @@ private var student : StudentEntites ?= null
             startActivity(intent)
         }
 
-        deleteBTN.setOnClickListener {
-            model.deleteAllStudents().observe(this,
-                Observer<StudentEntites>{ students-> recyclerViewAdapter!!.clearAll(students) })
-        }
-
         getCount.setOnClickListener {
             model.getCount().observe(this,
                 Observer<Int> { integer -> studentsCount.setText(integer.toString()) })
