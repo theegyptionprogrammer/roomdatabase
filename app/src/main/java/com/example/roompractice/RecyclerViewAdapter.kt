@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.activity_add_student.view.*
+import android.widget.ImageView
 import kotlinx.android.synthetic.main.student.view.*
 
 class RecyclerViewAdapter(var listStudents: ArrayList<StudentEntites>, val context: Context) : RecyclerView.Adapter<RecyclerViewAdapter.viewHolder>() {
@@ -21,7 +21,7 @@ class RecyclerViewAdapter(var listStudents: ArrayList<StudentEntites>, val conte
         notifyItemRemoved(position)
     }
 
-    fun clearAll(listStudents: StudentEntites?){
+    fun clearAll(listStudents: ArrayList<StudentEntites>){
         this.listStudents.removeAll(listStudents)
         notifyDataSetChanged()
     }
@@ -38,6 +38,7 @@ class RecyclerViewAdapter(var listStudents: ArrayList<StudentEntites>, val conte
         holder.addressTV.text = listStudents[position].studentAddress
         holder.courseTV.text = listStudents[position].studentCourse
         holder.idTV.text = listStudents[position].studentId.toString()
+        holder.profilePhoto.setImageBitmap(listStudents[position].profilePhoto)
     }
 
     class viewHolder(view : View) : RecyclerView.ViewHolder(view){
@@ -45,8 +46,7 @@ class RecyclerViewAdapter(var listStudents: ArrayList<StudentEntites>, val conte
         val addressTV = view.addressTV
         val courseTV = view.courseTV
         val idTV = view.idTV
-        val photoFromGallery = view.photoFromGallery
-        val photoFromCamera  = view.photoFromCamera
+        val profilePhoto = view.findViewById<ImageView>(R.id.profilephoto)
     }
 
 
