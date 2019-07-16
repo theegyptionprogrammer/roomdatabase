@@ -6,7 +6,7 @@ import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
 
-@Database(entities = arrayOf(StudentEntites::class) , version = 2)
+@Database(entities = arrayOf(StudentEntites::class) , version = 1)
 @TypeConverters(Converters::class)
 abstract class StudentDatabase : RoomDatabase(){
 

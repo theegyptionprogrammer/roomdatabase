@@ -5,11 +5,11 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import kotlinx.android.synthetic.main.student.view.*
 
 class RecyclerViewAdapter(var listStudents: ArrayList<StudentEntites>, val context: Context) : RecyclerView.Adapter<RecyclerViewAdapter.viewHolder>() {
 
+    val images : IntArray? = null
 
     fun addStudent(listStudents : ArrayList<StudentEntites>){
         this.listStudents = listStudents
@@ -34,19 +34,19 @@ class RecyclerViewAdapter(var listStudents: ArrayList<StudentEntites>, val conte
 
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        holder.nameTV.text = listStudents[position].studemtName
-        holder.addressTV.text = listStudents[position].studentAddress
-        holder.courseTV.text = listStudents[position].studentCourse
-        holder.idTV.text = listStudents[position].studentId.toString()
-        holder.profilePhoto.setImageBitmap(listStudents[position].profilePhoto)
+        holder.onBind(listStudents[position])
     }
 
-    class viewHolder(view : View) : RecyclerView.ViewHolder(view){
-        val nameTV = view.nameTV
-        val addressTV = view.addressTV
-        val courseTV = view.courseTV
-        val idTV = view.idTV
-        val profilePhoto = view.findViewById<ImageView>(R.id.profilephoto)
+    class viewHolder(val view : View) : RecyclerView.ViewHolder(view){
+
+        fun onBind(studentEntites: StudentEntites){
+            view.nameTV.text = studentEntites.studemtName
+            view.addressTV.text = studentEntites.studentAddress
+            view.courseTV.text = studentEntites.studentCourse
+            view.idTV.text = studentEntites.studentId.toString()
+          //  view.profilephoto2.setImageBitmap(studentEntites.profilePhoto)
+        }
+
     }
 
 

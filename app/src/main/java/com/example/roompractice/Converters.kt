@@ -32,6 +32,15 @@ class Converters {
             }
         }
 
+    companion object{
+        @TypeConverter
+        @JvmStatic
+        fun fromValueToBitmap(value : String): Bitmap?{
+            return value.
+        }
+    }
+
+
 
 
 }

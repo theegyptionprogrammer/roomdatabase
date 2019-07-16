@@ -9,8 +9,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -20,9 +19,11 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.EditText
 import android.widget.Toast
 import butterknife.ButterKnife
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_add_student.*
-import org.jetbrains.anko.doAsync
-import java.io.ByteArrayOutputStream
 
 
 class AddStudentActivity : AppCompatActivity() {
@@ -42,26 +43,41 @@ class AddStudentActivity : AppCompatActivity() {
         module = ViewModelProviders.of(this).get(StudentViewModule::class.java)
 
         ButterKnife.bind(this)
-        saveBTN.setOnClickListener {
-            doAsync {
-                val name = findViewById<EditText>(R.id.nameET).text.toString()
-                val address = findViewById<EditText>(R.id.addressET).text.toString()
-                val course = findViewById<EditText>(R.id.courseET).text.toString()
-                val id =  Integer.parseInt(findViewById<EditText>(R.id.idET).text.toString())
-                val bitmap = (profilephoto.drawable as BitmapDrawable).bitmap
-                val stream = ByteArrayOutputStream()
-                bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
-                module.insert(StudentEntites(id , name , course , address , bitmap ))
-            }
-            Toast.makeText(this , "new student have been added" , Toast.LENGTH_SHORT).show()
-            nameET.setText("")
-            addressET.setText("")
-            courseET.setText("")
-            idET.setText("")
-        }
+        saveBTN.setOnClickListener {save()}
         photoFromGallery.setOnClickListener { requestStoragePermissionForGallery() }
         photoFromCamera.setOnClickListener {requestStoragePermissionForCamera() }
     }
+
+    private fun save(){
+ //     val pp = (profilephoto.drawable as BitmapDrawable).bitmap
+  //      val stream = ByteArrayOutputStream()
+    //    bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream)
+      //  val pp = stream.toByteArray()
+
+
+            val bitmap = BitmapFactory.decodeResource(resources ,R.id.profilephoto2 )
+          //  val profilePic = findViewById<ImageView>(R.id.profilephoto).setImageBitmap(bitmap)
+            val name = findViewById<EditText>(R.id.nameET).text.toString()
+            val address = findViewById<EditText>(R.id.addressET).text.toString()
+            val course = findViewById<EditText>(R.id.courseET).text.toString()
+            val id =  Integer.parseInt(findViewById<EditText>(R.id.idET).text.toString())
+
+        insertToDb(StudentEntites(id , name , course , address  ))
+        Toast.makeText(this , "new student have been added" , Toast.LENGTH_SHORT).show()
+        nameET.setText("")
+        addressET.setText("")
+        courseET.setText("")
+        idET.setText("")
+    }
+
+    fun insertToDb(studentEntites: StudentEntites){
+        val compositeDisposable = CompositeDisposable()
+        compositeDisposable.add(Observable.fromCallable{studentDatabase?.studentDao()?.insert(studentEntites)}
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe())
+    }
+
 
     @SuppressLint("ObsoleteSdkInt")
     private fun requestStoragePermissionForGallery() {
